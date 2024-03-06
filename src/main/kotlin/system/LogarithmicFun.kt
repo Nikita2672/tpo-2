@@ -12,7 +12,7 @@ class LogarithmicFun(
 
     override fun compute(x: Double): Double {
         require(x != 0.0) { "Выход за пределы области допустимых значений" }
-        require(log3.compute(x) != 0.0) { "Деление на ноль"}
+        require(x != 1.0) { "Деление на ноль"}
         return (((log5.compute(x).pow(2) - log5.compute(x)) / log3.compute(x)) + (log5.compute(x) - log5.compute(x))).pow(3.0)
     }
 }

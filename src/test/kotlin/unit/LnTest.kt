@@ -24,6 +24,7 @@ class LnTest {
             arrayTestValues[1.0] = 0.0
             arrayTestValues[1.4] = 0.33647223662121295
             arrayTestValues[2.0] = 0.6931471805599453
+            arrayTestValues[5.0] = 1.609
             // проверка для x>2
             arrayTestValues[3.0] = 1.098612
             arrayTestValues[100.0] = 4.60517

@@ -1,6 +1,8 @@
 package log
 
 import Fun
+import java.io.FileWriter
+import java.io.IOException
 import kotlin.math.abs
 import kotlin.math.pow
 
