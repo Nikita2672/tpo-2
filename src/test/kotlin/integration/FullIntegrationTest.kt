@@ -25,11 +25,22 @@ class FullIntegrationTest {
 
     @Test
     fun `test full integration equation system left`() {
+        Assertions.assertEquals(1.0, equationSystem.compute(0.0), DELTA)
         Assertions.assertEquals(1.0, equationSystem.compute(-2 * PI), DELTA)
         Assertions.assertEquals(0.0, equationSystem.compute(-1.5 * PI), DELTA)
         Assertions.assertEquals(-1.0, equationSystem.compute(-PI), DELTA)
         Assertions.assertEquals(0.0, equationSystem.compute(-PI / 2), DELTA)
         Assertions.assertEquals(-sqrt(2.0) / 2, equationSystem.compute((-3.0 / 4.0) * PI), DELTA)
+    }
+
+    @Test
+    fun `test with invalid input`() {
+        Assertions.assertEquals(Double.NaN, equationSystem.compute(Double.NaN))
+        Assertions.assertEquals(Double.NaN, equationSystem.compute(Double.POSITIVE_INFINITY))
+        Assertions.assertEquals(Double.NaN, equationSystem.compute(Double.NEGATIVE_INFINITY))
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            equationSystem.compute(1.0)
+        }
     }
 
     companion object {

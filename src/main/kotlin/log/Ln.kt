@@ -6,13 +6,15 @@ import kotlin.math.pow
 
 
 class Ln(private val eps: Double) : MathFunction {
-    private val ln2: Double = compute(2.0)
-
     init {
         require(eps > 0) { "Epsilon must be positive" }
     }
 
+    private val ln2: Double = compute(2.0)
+
     override fun compute(x: Double): Double {
+        if (x.isNaN()) return Double.NaN
+        if (x == Double.POSITIVE_INFINITY) return Double.POSITIVE_INFINITY
         require(x >= 0) { "Ln is undefined for x < 0" }
         if (x == 0.0) return Double.NEGATIVE_INFINITY
 

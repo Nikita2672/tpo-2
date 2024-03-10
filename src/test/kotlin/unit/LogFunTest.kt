@@ -5,6 +5,7 @@ import log.Log5
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito
 import system.LogarithmicFun
@@ -32,6 +33,7 @@ class LogFunTest {
             `when`(log5.compute(5.0)).thenReturn(1.0)
             `when`(log5.compute(100.0)).thenReturn(2.8621)
 
+
             logarithmicFun = LogarithmicFun(log3, log5)
         }
     }
@@ -43,5 +45,9 @@ class LogFunTest {
         Assertions.assertEquals(-0.01014, logarithmicFun.compute(3.0), DELTA)
         Assertions.assertEquals(0.0, logarithmicFun.compute(5.0), DELTA)
         Assertions.assertEquals(2.05523, logarithmicFun.compute(100.0), DELTA)
+        Assertions.assertEquals(Double.NaN, logarithmicFun.compute(Double.NaN))
+        assertThrows<IllegalArgumentException> {
+            logarithmicFun.compute(1.0)
+        }
     }
 }

@@ -8,11 +8,18 @@ import kotlin.math.pow
 
 class Sin(private val eps: Double) : MathFunction {
 
+    init {
+        require(eps > 0) { "Точность должна быть положительным числом" }
+    }
+
     private fun sinTailor(value: Double, n: Int): Double {
         return (-1.0).pow(n) * value.pow(2 * n + 1) / factorial((2 * n + 1).toLong())
     }
 
     override fun compute(x: Double): Double {
+        if (x.isNaN() || x.isInfinite()) {
+            return Double.NaN
+        }
         val xShortened = shortenRange(x)
         require(eps > 0) { "Точность должна быть положительным числом" }
         var result = 0.0

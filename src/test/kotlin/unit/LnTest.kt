@@ -2,6 +2,8 @@ package unit
 
 import log.Ln
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,6 +16,17 @@ class LnTest {
         val actual = ln.compute(x)
 
         assertEquals(expected, actual, DELTA)
+    }
+
+    @Test
+    fun throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException::class.java) {
+            ln.compute(-1.0)
+        }
+
+        assertThrows(IllegalArgumentException::class.java) {
+           Ln(-0.01)
+        }
     }
 
     companion object {
@@ -33,6 +46,8 @@ class LnTest {
                 // проверка для x>2
                 3.0 to 1.098612,
                 100.0 to 4.60517,
+                Double.NaN to Double.NaN,
+                Double.POSITIVE_INFINITY to Double.POSITIVE_INFINITY,
             )
                 .map { Arguments.of(it.key, it.value) }
     }

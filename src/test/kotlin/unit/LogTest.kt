@@ -4,6 +4,7 @@ import log.Ln
 import log.Log3
 import log.Log5
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -18,6 +19,11 @@ class LogTest {
         assertEquals(0.63138, log3.compute(2.0), DELTA)
         assertEquals(1.0003, log3.compute(3.0), DELTA)
         assertEquals(4.1918, log3.compute(100.0), DELTA)
+        assertEquals(Double.NaN, log3.compute(Double.NaN))
+        assertEquals(Double.POSITIVE_INFINITY, log3.compute(Double.POSITIVE_INFINITY))
+        assertThrows(IllegalArgumentException::class.java) {
+            log3.compute(-1.0)
+        }
     }
 
     @Test
@@ -27,6 +33,11 @@ class LogTest {
         assertEquals(0.43098, log5.compute(2.0), DELTA)
         assertEquals(0.68281, log5.compute(3.0), DELTA)
         assertEquals(2.8621, log5.compute(100.0), DELTA)
+        assertEquals(Double.NaN, log5.compute(Double.NaN))
+        assertEquals(Double.POSITIVE_INFINITY, log5.compute(Double.POSITIVE_INFINITY))
+        assertThrows(IllegalArgumentException::class.java) {
+            log5.compute(-1.0)
+        }
     }
 
     companion object {
@@ -43,8 +54,10 @@ class LogTest {
             `when`(ln.compute(2.0)).thenReturn(0.693147)
             `when`(ln.compute(3.0)).thenReturn(1.098612)
             `when`(ln.compute(100.0)).thenReturn(4.60517)
-
             `when`(ln.compute(5.0)).thenReturn(1.609)
+            `when`(ln.compute(Double.NaN)).thenReturn(Double.NaN)
+            `when`(ln.compute(Double.POSITIVE_INFINITY)).thenReturn(Double.POSITIVE_INFINITY)
+            `when`(ln.compute(-1.0)).thenThrow(IllegalArgumentException::class.java)
 
             log3 = Log3(ln)
             log5 = Log5(ln)
