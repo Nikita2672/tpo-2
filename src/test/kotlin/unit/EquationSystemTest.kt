@@ -1,4 +1,4 @@
-package integration
+package unit
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -11,10 +11,6 @@ import trig.TrigFun
 import kotlin.math.PI
 import kotlin.math.sqrt
 
-/**
- * @author nivanov
- * @since %CURRENT_VERSION%
- */
 class EquationSystemTest {
 
     companion object {
@@ -26,7 +22,6 @@ class EquationSystemTest {
         @BeforeAll
         @JvmStatic
         fun setUp() {
-
             `when`(logarithmicFun.compute(0.5)).thenReturn(-0.92896)
             `when`(logarithmicFun.compute(2.0)).thenReturn(-0.05859)
             `when`(logarithmicFun.compute(3.0)).thenReturn(-0.01014)

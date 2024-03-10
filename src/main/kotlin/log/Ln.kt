@@ -1,28 +1,19 @@
 package log
 
-import Fun
-import java.io.FileWriter
-import java.io.IOException
+import MathFunction
 import kotlin.math.abs
 import kotlin.math.pow
 
 
-class Ln(eps: Double) : Fun() {
-    private val eps: Double
-    private val ln2: Double
+class Ln(private val eps: Double) : MathFunction {
+    private val ln2: Double = compute(2.0)
 
     init {
-        funcName = "ln(x)"
-        this.eps = eps * 0.1
-        ln2 = compute(2.0)
-    }
-
-    private fun lnTailor(value: Double, n: Double): Double {
-        return (-1.0).pow(n - 1) * (value - 1).pow(n) / n
+        require(eps > 0) { "Epsilon must be positive" }
     }
 
     override fun compute(x: Double): Double {
-        require(!(eps < 0 || x < 0)) { "Точность должна быть положительной" }
+        require(x >= 0) { "Ln is undefined for x < 0" }
         if (x == 0.0) return Double.NEGATIVE_INFINITY
 
         // за данными значениями ряд расходится
@@ -39,4 +30,7 @@ class Ln(eps: Double) : Fun() {
         }
         return result
     }
+
+    private fun lnTailor(value: Double, n: Double): Double =
+        (-1.0).pow(n - 1) * (value - 1).pow(n) / n
 }

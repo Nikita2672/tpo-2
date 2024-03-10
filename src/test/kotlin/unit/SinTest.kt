@@ -1,77 +1,59 @@
 package unit
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import trig.Sin
 import java.lang.Double.NaN
-import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.math.PI
 import kotlin.math.sqrt
 
-
 class SinTest {
 
-    companion object {
-
-
-        private val arrayTestValues = HashMap<Double, Double>()
-        private val DELTA = 0.00001
-        private val sin = Sin(DELTA)
-
-        @BeforeAll
-        @JvmStatic
-        fun setUp() {
-            // ключ - x, значение - введенное значение - y
-
-            //проверка нулевого значения
-            arrayTestValues[0.0] = 0.0
-
-            //проверка правой стороны
-            arrayTestValues[PI / 6] = 0.5
-            arrayTestValues[PI / 4] = sqrt(2.0) / 2
-            arrayTestValues[PI / 3] = sqrt(3.0) / 2
-            arrayTestValues[PI / 2] = 1.0
-            arrayTestValues[2 * PI / 3] = sqrt(3.0) / 2
-            arrayTestValues[3 * PI / 4] = sqrt(2.0) / 2
-            arrayTestValues[5 * PI / 6] = 0.5
-
-            //проверка левой стороны (на четность)
-            arrayTestValues[-PI / 6] = -0.5
-            arrayTestValues[-PI / 4] = -sqrt(2.0) / 2
-            arrayTestValues[-PI / 3] = -sqrt(3.0) / 2
-            arrayTestValues[-PI / 2] = -1.0
-            arrayTestValues[-2 * PI / 3] = -sqrt(3.0) / 2
-            arrayTestValues[-3 * PI / 4] = -sqrt(2.0) / 2
-            arrayTestValues[-5 * PI / 6] = -0.5
-
-            //проверка граничных значений
-            arrayTestValues[-PI] = 0.0
-            arrayTestValues[PI] = 0.0
-
-            //тестирование NaN, Infinity
-            arrayTestValues[NaN] = NaN
-            arrayTestValues[Double.POSITIVE_INFINITY] = NaN
-            arrayTestValues[Double.NEGATIVE_INFINITY] = NaN
-
-            //тестовые значения за границами -2pi ; 2pi
-            arrayTestValues[7 * PI / 6] = -0.5
-            arrayTestValues[-7 * PI / 6] = 0.5
-        }
-
-        @AfterAll
-        fun tearDown() {
-            arrayTestValues.clear()
-        }
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    fun testSin(x: Double, expected: Double) {
+        val actual = sin.compute(x)
+        assertEquals(expected, actual, DELTA)
     }
 
-    @Test
-    fun testSin() {
-        for ((key, value) in arrayTestValues) {
-            val actual = sin.compute(key)
+    companion object {
+        private const val DELTA = 0.00001
+        private val sin = Sin(DELTA)
 
-            println("x = $key actual = $actual expected = $value")
-            assertEquals(value, actual, DELTA)
-        }
+        @JvmStatic
+        fun provideTestData() =
+            mapOf(
+                // проверка нулевого значения
+                0.0 to 0.0,
+                // проверка правой стороны
+                PI / 6 to 0.5,
+                PI / 4 to sqrt(2.0) / 2,
+                PI / 3 to sqrt(3.0) / 2,
+                PI / 2 to 1.0,
+                2 * PI / 3 to sqrt(3.0) / 2,
+                3 * PI / 4 to sqrt(2.0) / 2,
+                5 * PI / 6 to 0.5,
+                // проверка левой стороны (на четность)
+                -PI / 6 to -0.5,
+                -PI / 4 to -sqrt(2.0) / 2,
+                -PI / 3 to -sqrt(3.0) / 2,
+                -PI / 2 to -1.0,
+                -2 * PI / 3 to -sqrt(3.0) / 2,
+                -3 * PI / 4 to -sqrt(2.0) / 2,
+                -5 * PI / 6 to -0.5,
+                // проверка граничных значений
+                -PI to 0.0,
+                PI to 0.0,
+                // тестирование NaN, Infinity
+                NaN to NaN,
+                Double.POSITIVE_INFINITY to NaN,
+                Double.NEGATIVE_INFINITY to NaN,
+                // тестовые значения за границами -2pi ; 2pi
+                7 * PI / 6 to -0.5,
+                -7 * PI / 6 to 0.5
+            )
+                .map { Arguments.of(it.key, it.value) }
     }
 }

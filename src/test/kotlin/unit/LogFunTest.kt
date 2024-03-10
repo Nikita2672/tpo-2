@@ -1,4 +1,4 @@
-package integration
+package unit
 
 import log.Log3
 import log.Log5
@@ -9,10 +9,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito
 import system.LogarithmicFun
 
-/**
- * @author nivanov
- * @since %CURRENT_VERSION%
- */
 class LogFunTest {
 
     companion object {
@@ -24,7 +20,6 @@ class LogFunTest {
         @BeforeAll
         @JvmStatic
         fun setUp() {
-
             `when`(log3.compute(0.5)).thenReturn(-0.62910)
             `when`(log3.compute(2.0)).thenReturn(0.63138)
             `when`(log3.compute(3.0)).thenReturn(1.0)
@@ -40,7 +35,7 @@ class LogFunTest {
             logarithmicFun = LogarithmicFun(log3, log5)
         }
     }
-    
+
     @Test
     fun `test logarithm Fun`() {
         Assertions.assertEquals(-0.92896, logarithmicFun.compute(0.5), DELTA)

@@ -12,22 +12,7 @@ import trig.TrigFun
 import kotlin.math.PI
 import kotlin.math.sqrt
 
-/**
- * @author nivanov
- * @since %CURRENT_VERSION%
- */
 class FullIntegrationTest {
-
-    companion object {
-        private const val DELTA = 0.01
-        private val sin = Sin(DELTA)
-        private val trigFun = TrigFun(sin)
-        private val ln = Ln(DELTA)
-        private val log3 = Log3(ln)
-        private val log5 = Log5(ln)
-        private val logarithmicFun = LogarithmicFun(log3, log5)
-        private val equationSystem = EquationSystem(trigFun, logarithmicFun)
-    }
 
     @Test
     fun `test full integration equation system right`() {
@@ -45,5 +30,16 @@ class FullIntegrationTest {
         Assertions.assertEquals(-1.0, equationSystem.compute(-PI), DELTA)
         Assertions.assertEquals(0.0, equationSystem.compute(-PI / 2), DELTA)
         Assertions.assertEquals(-sqrt(2.0) / 2, equationSystem.compute((-3.0 / 4.0) * PI), DELTA)
+    }
+
+    companion object {
+        private const val DELTA = 0.01
+        private val sin = Sin(DELTA)
+        private val trigFun = TrigFun(sin)
+        private val ln = Ln(DELTA)
+        private val log3 = Log3(ln)
+        private val log5 = Log5(ln)
+        private val logarithmicFun = LogarithmicFun(log3, log5)
+        private val equationSystem = EquationSystem(trigFun, logarithmicFun)
     }
 }

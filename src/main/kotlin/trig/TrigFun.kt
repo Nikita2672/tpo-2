@@ -1,19 +1,11 @@
 package trig
 
-import Fun
+import MathFunction
 import kotlin.math.PI
 
-class TrigFun(sin: Sin): Fun() {
-
-    private val sin: Sin
-
-    init {
-        funcName = "cos(x)"
-        this.sin = sin
-    }
+class TrigFun(private val sin: Sin) : MathFunction {
 
     override fun compute(x: Double): Double {
         return sin.compute(x + (PI / 2))
     }
-
 }
